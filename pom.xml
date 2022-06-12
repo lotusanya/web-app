@@ -97,7 +97,7 @@
 	    <repository>
 	      <id>nexus</id>
 	      <name>ACADA Learning Releases Nexus Repository</name>
-	      <url>http://34.217.135.23:5050/repository/shnier-snapshot/</url>
+	      <url>http://34.217.135.23:5050/repository/shnier-release/</url>
 	    </repository>
 	    
 	    <snapshotRepository>
