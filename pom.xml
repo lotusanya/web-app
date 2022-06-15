@@ -97,13 +97,13 @@
 	    <repository>
 	      <id>nexus</id>
 	      <name>ACADA Learning Releases Nexus Repository</name>
-	      <url>http://34.217.135.23:5050/repository/shnier-release/</url>
+	      <url>http://54.69.207.18:6060/repository/TD-Release/</url>
 	    </repository>
 	    
 	    <snapshotRepository>
 	      <id>nexus</id>
 	      <name>ACADA Learning Snapshot Nexus Repository </name>
-	      <url>http://34.217.135.23:5050/repository/shnier-snapshot/</url>
+	      <url>http://54.69.207.18:6060/repository/TD-snapshot/</url>
 	    </snapshotRepository>
 	    
 	</distributionManagement>
