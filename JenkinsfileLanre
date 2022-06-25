@@ -1,0 +1,46 @@
+pipeline {
+    agent {label 'node1'}
+    tools {
+        maven "Maven3.8.4"
+    }
+    stages {
+        stage("Initiation"){
+            steps {
+                sh "echo starting the gbengene project"
+            }
+    }
+        stage ("codeclone"){
+            steps {
+                sh "echo cloning the code from github"
+                git credentialsId: 'Github-Cred', url: 'https://github.com/lotusanya/web-app.git'
+            }
+        }
+        stage ("maven stage"){
+         steps { 
+             sh "echo starting all maven processes"
+             sh "mvn clean"
+             sh "mvn package"
+             sh "mvn sonar:sonar"
+            //sh "mvn deploy"
+                         } 
+        }
+        stage ("Approval stage"){
+            steps {
+         sh "echo Approval is required to continue"
+         timeout(time:2, unit: 'MINUTES'){
+             input message:'Please grant approval'
+         }
+        }
+        }
+        stage ("Deply to Tomcat"){
+            steps {
+                deploy adapters: [tomcat9(credentialsId: 'TomcatCred', path: '', url: 'http://54.244.214.192:8080/')], contextPath: 'LOProject', war: '**/*.war'
+            }
+        }
+        stage ("Archive"){
+            steps {
+                archiveArtifacts artifacts: '**/*.war', followSymlinks: false, onlyIfSuccessful: true
+        }
+    }
+}
+}
