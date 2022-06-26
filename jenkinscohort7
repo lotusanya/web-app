@@ -21,7 +21,7 @@ pipeline {
              sh "mvn clean"
              sh "mvn package"
              sh "mvn sonar:sonar"
-            //sh "mvn deploy"
+             sh "mvn deploy"
                          } 
         }
         stage ("Approval stage"){
