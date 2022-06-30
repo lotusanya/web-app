@@ -29,6 +29,12 @@ stage("Artifact"){
              Lanre("Artifact")             
          }     
 }
+stage("Checkstyle"){
+         steps{
+             sh "echo checkstyle the code"
+             sh "mvn checkstyle:checkstyle"            
+         }     
+}
 stage("Approval Gate"){
     steps{
         timeout (time:2, unit: "MINUTES"){
