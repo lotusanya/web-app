@@ -1,0 +1,45 @@
+@Library ('JenkinsSharedLibraries') _
+pipeline {
+    agent {label 'node6'}
+    tools {
+      maven "Maven3.8.4"
+    }
+    stages{
+        stage("code clone"){
+         steps{
+             sh "echo cloning the code"
+             git "https://github.com/lotusanya/web-app.git"
+         }
+    }
+    stage("Build"){
+         steps{
+             sh "echo building the code"
+             Lanre("Build")
+}
+}
+stage("Test"){
+         steps{
+             sh "echo testing the code"
+             Lanre("Test")
+         }
+} 
+stage("Artifact"){
+         steps{
+             sh "echo testing the code"
+             Lanre("Artifact")             
+         }     
+}
+stage("Approval Gate"){
+    steps{
+        timeout (time:2, unit: "MINUTES"){
+            input message: "Approval is required to proceed"
+            }
+        }
+} 
+stage("Deploy to Tomcat"){
+    steps{
+        deploy adapters: [tomcat9(credentialsId: 'TomcatCred', path: '', url: 'http://34.223.253.118:8080/')], contextPath: 'lotuschi', war: '**/*.war'
+    }
+}
+}
+}
