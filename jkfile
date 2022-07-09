@@ -1,0 +1,41 @@
+pipeline {
+    agent any
+    tools {
+        maven "Maven3.8.6"
+    }
+    stages{
+        stage ("1.Initiation"){
+            steps {
+            sh "echo start of project"
+        }
+    }    
+        stage ("2.codeclone"){
+            steps {
+                git "https://github.com/lotusanya/web-app.git"
+            }
+        }
+        stage ("3.Build"){
+            steps {
+                sh "mvn package"
+            }
+        }
+        stage ("4.CodeQualityCheck"){
+            steps {
+                sh "mvn sonar:sonar"
+            }
+        }
+        stage ("5.Manual Approval"){
+            steps {
+                sh "echo Approval is required"
+                timeout (time:2, unit:"MINUTES"){
+                 input message : "Please grant approval"
+                }
+            }
+    }
+    stage ("6.Archive"){
+      steps {
+          archiveArtifacts artifacts: '**/*.war', followSymlinks: false
+      }
+}
+}
+}
